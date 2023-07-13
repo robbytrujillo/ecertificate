@@ -40,7 +40,7 @@ $centerY = ($templateHeight - $textHeight) / 2;
 $pdf->SetXY($centerX, $centerY); // Menyesuaikan koordinat posisi teks
 $pdf->Cell(0, $textHeight, $nama, 0, 0, 'C');
 
-$pdf->Output('certificate-kurban.pdf', 'I');
+$pdf->Output('Ihbs-certificate-kurban.pdf', 'I');
 
 ?> 
 
