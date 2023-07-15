@@ -3,13 +3,13 @@ body {
 }
 
 .form-container {
-  max-width: 400px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 5px;
-  padding: 20px;
+  padding: 40px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: #485664;
 }
 
 .form-container h2 {

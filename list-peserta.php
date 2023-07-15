@@ -1,7 +1,13 @@
+<?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+require 'db.php';
+?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>E-Sertifikat IHBS</title>
+    <title>E-Certifikat IHBS</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
   </head>
   <body background="bg1.jpg">

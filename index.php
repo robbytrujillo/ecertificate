@@ -7,9 +7,10 @@ require 'db.php';
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>E-Sertifikat IHBS</title>
+		<title>E-Certifikat IHBS</title>
 		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 		<meta content="" name="description">
+		<link rel="stylesheet" href="assets/css/stylesheet.css" />
   <meta content="" name="keywords">
 
   <!-- Favicons -->
@@ -35,8 +36,11 @@ require 'db.php';
   <link href="assets/css/main.css" rel="stylesheet">
 
   <link href="assets/css/style.css" rel="stylesheet">
+  
+  <link rel="icon" href="ihbslogo.png" type="image/x-icon" sizes="16x16">
 
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ <!-- Bootstrap CSS --> 
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
 
   <!-- script typewritter -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -63,7 +67,6 @@ require 'db.php';
 
           <li><a href="#"><span>Home</span> <i class="nav-link scrollto"></i></a>
           </li>
-          <li><a class="nav-link scrollto" href="index.html#certificate">Certificate</a></li>
           <li><a class="nav-link scrollto" href="index.html#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle d-none"></i>
@@ -77,7 +80,7 @@ require 'db.php';
   
 
  
-    <section id="hero-animated" class="hero-animated d-flex align-items-center" style="margin-top: 10px; margin-bottom: 10px;">
+    <section id="hero-animated" class="hero-animated d-flex align-items-center" style="margin-top: 5px; margin-bottom: 5px;">
   <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">  
     <h2 class="welcome-title">Welcome to <span style="color: #218838">ECertificate Ihbs</span></b><br>
     
@@ -85,67 +88,89 @@ require 'db.php';
     
 
   </section>
-
+<section>
   <main id="main">
 
-  <!-- <img class="center" height="50" width="50" src="ihbs-logo.png"> -->
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
 
-        <div class="form-container">
-        <form action="index.php" method="post">
+  <!-- <img class="center" height="50" width="50" src="ihbs-logo.png"> -->
+  
+
     
-          <div class="form-group">
-            <h3>Masukan Nama</h3>
-            <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Isi Nama Depan Atau Belakang Anda"><br>
-            <input type="submit" class="btn btn-success" value="Check" name="sertifikat"></input><br>
-          </div>
-          </form>
+     <!-- ======= Call To Action Section ======= -->
+    <section id="cta" class="cta">
+      <div class="container" data-aos="zoom-out">
+        <!--<img class="center" height="50" width="50" src="ihbs-logo.png">-->
+        <div class="row g-5">
+
+          <div class="col-lg-8 col-md-6 content d-flex flex-column justify-content-center order-last order-md-first">
+            <!--<h3>Alias sunt quas <em>Cupiditate</em> oluptas hic minima</h3>-->
+            <!--<p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>-->
+            <!--<a class="cta-btn align-self-start" href="#">Call To Action</a>-->
+             <form action="index.php" method="post">
+                 <div class="form-group mt-3">
+                 <h4><b>Masukan No.Registrasi Atau Nama</b></h4>
+                <p class="keyword">
+             <input type="text" class="form-control id="keyword" name="keyword" placeholder="Isi Nomor Registrasi Atau Nama Anda" size="30" height="30px" width="70px" />
+             <h5 style="color: blue"><b>**no registrasi harus isi 4 angka, contoh 0001</b></h5>
+             </p>
+           <!--<a class="cta-btn align-self-start" type="submit" value="Check" name="sertifikat">Check</a><br>-->
+         <button type="submit" class="btn btn-success btn-lg" value="Check" name="sertifikat" >Check</button>
           <?php
 								 $hasil = "";
 									
                   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 									  $keyword = $_POST["keyword"];
                     if (empty($keyword)){
-                      echo '<center><h3><i>**Data tidak boleh kosong!</i></h3></center>';
+                      echo '<center><h4 style="color: red"><i>Maaf Data tidak boleh kosong!</i></h4></center>';
                     } else {
-										$sql = "SELECT * FROM peserta WHERE nama LIKE '%".$keyword."%'";
+										$sql = "SELECT * FROM peserta WHERE nama LIKE '%".$keyword."%' OR no_registrasi LIKE '%" . $keyword . "%'";
 										$result = $conn->query($sql);
 										if ($result->num_rows > 0) {
 											while ($row = $result->fetch_assoc()){
 												$hasil = $row['nama'];
-												echo '<center><h3><i>**Nama anda terdaftar sebagai peserta!</i></h3></center><br>';
+												echo '<center><h4 style="color: red"><i>**Nama anda terdaftar sebagai peserta!</i></h4></center><br>';
 
 											}
 										} else 
                     {
-											echo '<center><h3><i>**Data Tidak Ada!</i></h3></center>';
+											echo '<center><h4 style="color: red"><i>Maaf Data Tidak Ada!</i></h4></center>';
 										}
                   }
 									}
 									$conn->close();
 								?>
-
-            <form action="sertifikat.php" method="post">    
-              <div class="form-group">
-                <h3>Nama Di Serifikat</h3>
-                <input type="text" class="form-control" name="namadisable" disabled="yes" value="<?php echo (isset($keyword))?$hasil:'your name will shown automatic';?>" >
-                <input type="hidden" name="namacetak" value="<?php echo (isset($keyword))?$hasil:'your name will shown automatic';?>"><br>
-                <input id="get" type="submit" class="btn btn-success" value="Buat Sertifikat" name="sertifikat"></input>
+          
+          
           </div>
-          <center><h3>Lihat <a href="list-peserta.html"> Daftar Peserta</a></h3></center>
-        </form>
-      </div>
-    </div>
-  </div>
-  </div>
+          </form>
+        
+        <br>
+            
+             <form action="sertifikat.php" method="post">  
+             <div class="form-group mt-3">
+            <h4><b>Nama Di Sertifikat</b></h4>
+             <!--<p class="keyword">-->
+            <input type="text" class="form-control" name="namadisable" disabled="yes" value="<?php echo (isset($keyword))?$hasil:'your name will shown automatic';?>" >
+                <input type="hidden" name="namacetak" value="<?php echo (isset($keyword))?$hasil:'your name will shown automatic';?>">
+                <br>
+           <button type="submit" class="btn btn-success btn-lg" value="Buat Sertifikat" name="sertifikat">Cetak Sertifikat</button>
+          </div>
+           <center><h4><b>Lihat</b> <a href="list-peserta.php"> Daftar Peserta</a></h4></center>
+          </form>
+          </div>
 
-			
-         
-      </div>
-    </section><!-- End About Section -->
+          <div class="col-lg-4 col-md-6 order-first order-md-last d-flex align-items-center">
+            <div class="img">
+              <!--<img src="certificate1.jpg" alt="" class="img-fluid">-->
+              <img height="300" width="300" src="ihbs-logo.png" alt="" class"img-fluid">
+            </div>
+          </div>
 
+        </div>
+
+      </div>
+    </section><!-- End Call To Action Section -->
+    
     
       <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
@@ -218,7 +243,7 @@ require 'db.php';
                 <div class="error-message"></div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>
               </div>
-              <div class="text-center"><input id="get" type="submit" class="btn btn-success" value="send-message" name="send-message"></input>
+              <div class="text-center"><input id="get" type="submit" class="btn btn-success btn-lg" value="Send Message" name="send-message"></input>
           </div></div>
             </form>
           </div><!-- End Contact Form -->
@@ -252,7 +277,6 @@ require 'db.php';
             <h4>Useful Links</h4>
             <ul>
               <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bi bi-chevron-right"></i> <a href="#">Certificate</a></li>
               <li><i class="bi bi-chevron-right"></i> <a href="#">Contact</a></li>
             </ul>
           </div>
@@ -296,11 +320,8 @@ require 'db.php';
         </div>
 
         <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
-          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
-          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.facebook.com/IHBSNEWS" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/ihbsnews/" class="instagram"><i class="bi bi-instagram"></i></a>
         </div>
 
       </div>
@@ -326,7 +347,15 @@ require 'db.php';
 
   <script src="wordtyp.js"></script>
 
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="copy.js"></script>>
+  </script>
+
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS --> 
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> 
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
 
 </body>
 
